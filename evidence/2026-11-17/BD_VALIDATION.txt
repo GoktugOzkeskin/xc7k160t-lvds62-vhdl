@@ -1,0 +1,1 @@
+PASSED: VHDL design and VHDL wrapper, 62 inout differential pairs, 156.25MHz reference, MMCM 500/125/200MHz, automatic alignment/comparison and PASS/FAIL, 4 VIO and 3 ILA.

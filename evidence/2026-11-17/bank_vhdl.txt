@@ -1,0 +1,32 @@
+#-----------------------------------------------------------
+# xsim v2024.1 (64-bit)
+# SW Build 5076996 on Wed May 22 18:37:14 MDT 2024
+# IP Build 5075265 on Wed May 22 21:45:21 MDT 2024
+# SharedData Build 5076995 on Wed May 22 18:29:18 MDT 2024
+# Start of session at: Tue Nov 17 23:10:27 2026
+# Process ID: 15732
+# Current directory: <LOCAL_PATH>
+# Command line: xsim.exe -log bank_vhdl.log -mode tcl -source {xsim.dir/bank_vhdl/xsim_script.tcl}
+# Log file: <PROJECT>/sim/bank_vhdl.log
+# Journal file: <PROJECT>/sim\xsim.jou
+# Running On        :<HOST>
+# Platform          :Windows Server 2016 or Windows 10
+# Operating System  :26200
+# Processor Detail  :13th Gen Intel(R) Core(TM) i7-13700F
+# CPU Frequency     :2112 MHz
+# CPU Physical cores:8
+# CPU Logical cores :16
+# Host memory       :34164 MB
+# Swap memory       :2147 MB
+# Total Virtual     :36311 MB
+# Available Virtual :23494 MB
+#-----------------------------------------------------------
+source xsim.dir/bank_vhdl/xsim_script.tcl
+# xsim {bank_vhdl} -autoloadwcfg -runall
+Time resolution is 1 ps
+run -all
+Note: PASS: VHDL bank, 11 links, DDR alignment, both directions, last error/DRAIN counts, registered PASS, clear, RDY loss and missing cable
+Time: 417720 ns  Iteration: 0  Process: /tb_bank/line__62  File: <PROJECT>/sim/tb_bank.vhd
+$stop called at time : 417720 ns
+exit
+INFO: [Common 17-206] Exiting xsim at Tue Nov 17 23:10:30 2026...

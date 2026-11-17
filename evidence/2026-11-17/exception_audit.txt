@@ -1,0 +1,5 @@
+Same-pad output-buffer to own DDLY pairs: 62 (expected 62)
+Remaining timed unused self-readback paths: 0 (expected 0)
+Explicitly verified False Path objects with empty SLACK: 62 (expected 62)
+First-to-second synchronizer stages still timed: 13 (expected 13)
+External cable counterpart receivers and normal payload comparison paths are not covered by the same-pad exception.

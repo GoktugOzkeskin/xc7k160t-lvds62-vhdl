@@ -1,0 +1,7 @@
+GUI visual check completed after desktop unlock.
+Three banks: 20/20/22 differential inout pairs.
+TX/RX, BITSLIP/IDELAY, ILA/VIO and shared PASS/FAIL connections inspected.
+Vivado GUI: validate_bd_design -force completed successfully.
+Observed dialog: Validation successful. There are no errors or critical warnings in this design.
+save_bd_design recorded in GUI journal.
+Full diagram left open for user review.

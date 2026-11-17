@@ -1,0 +1,46 @@
+#-----------------------------------------------------------
+# xsim v2024.1 (64-bit)
+# SW Build 5076996 on Wed May 22 18:37:14 MDT 2024
+# IP Build 5075265 on Wed May 22 21:45:21 MDT 2024
+# SharedData Build 5076995 on Wed May 22 18:29:18 MDT 2024
+# Start of session at: Tue Nov 17 23:11:12 2026
+# Process ID: 15300
+# Current directory: <LOCAL_PATH>
+# Command line: xsim.exe -log system_vhdl.log -mode tcl -source {xsim.dir/system_vhdl/xsim_script.tcl}
+# Log file: <PROJECT>/sim/system_vhdl.log
+# Journal file: <PROJECT>/sim\xsim.jou
+# Running On        :<HOST>
+# Platform          :Windows Server 2016 or Windows 10
+# Operating System  :26200
+# Processor Detail  :13th Gen Intel(R) Core(TM) i7-13700F
+# CPU Frequency     :2112 MHz
+# CPU Physical cores:8
+# CPU Logical cores :16
+# Host memory       :34164 MB
+# Swap memory       :2147 MB
+# Total Virtual     :36311 MB
+# Available Virtual :23495 MB
+#-----------------------------------------------------------
+source xsim.dir/system_vhdl/xsim_script.tcl
+# xsim {system_vhdl} -autoloadwcfg -runall
+Time resolution is 1 ps
+run -all
+Note: PROGRESS VHDL serial t=25000000 ps
+Time: 25 us  Iteration: 0  Process: /tb_system/u/line__86  File: <PROJECT>/sim/tb_system.vhd
+Note: PROGRESS VHDL serial t=50000000 ps
+Time: 50 us  Iteration: 0  Process: /tb_system/u/line__86  File: <PROJECT>/sim/tb_system.vhd
+Note: PROGRESS VHDL serial t=75000000 ps
+Time: 75 us  Iteration: 0  Process: /tb_system/u/line__86  File: <PROJECT>/sim/tb_system.vhd
+Note: BANK 32 checked=324240/324240 error bits=0
+Time: 87266200 ps  Iteration: 9  Process: /tb_system/u/bank32/line__41  File: <PROJECT>/sim/tb_system.vhd
+Note: BANK 33 checked=324240/324240 error bits=0
+Time: 87266200 ps  Iteration: 9  Process: /tb_system/u/bank33/line__41  File: <PROJECT>/sim/tb_system.vhd
+Note: BANK 34 checked=356656/356656 error bits=0
+Time: 87266200 ps  Iteration: 9  Process: /tb_system/u/bank34/line__41  File: <PROJECT>/sim/tb_system.vhd
+Note: PASS: VHDL SYSTEM ALL 62 bidirectional pairs, actual UNISIM MMCM 156.25 MHz to 500/125/200 MHz, 31 cables, runtime reversal, BITSLIP/IDELAY, PRBS comparison and overall PASS
+Time: 87280 ns  Iteration: 9  Process: /tb_system/u/line__69  File: <PROJECT>/sim/tb_system.vhd
+$stop called at time : 87280 ns
+run: Time (s): cpu = 00:00:00 ; elapsed = 00:03:04 . Memory (MB): peak = 224.621 ; gain = 0.000
+exit
+INFO: xsimkernel Simulation Memory Usage: 88748 KB (Peak: 88748 KB), Simulation CPU Usage: 181124 ms
+INFO: [Common 17-206] Exiting xsim at Tue Nov 17 23:14:18 2026...

@@ -1,0 +1,78 @@
+Copyright 1986-2022 Xilinx, Inc. All Rights Reserved. Copyright 2022-2024 Advanced Micro Devices, Inc. All Rights Reserved.
+---------------------------------------------------------------------------------------------------------------------------------------------
+| Tool Version : Vivado v.2024.1 (win64) Build 5076996 Wed May 22 18:37:14 MDT 2024
+| Date         : Tue Nov 17 22:38:52 2026
+| Host         : <HOST> running 64-bit major release  (build 9200)
+| Command      : report_clocks -file <PROJECT>/reports/clocks.txt
+| Design       : lvds_vhdl_bd_wrapper
+| Device       : 7k160t-fbg676
+| Speed File   : -1  PRODUCTION 1.12 2017-02-17
+| Design State : Synthesized
+---------------------------------------------------------------------------------------------------------------------------------------------
+
+Clock Report
+
+
+Attributes
+  P: Propagated
+  G: Generated
+  A: Auto-derived
+  R: Renamed
+  V: Virtual
+  I: Inverted
+  S: Pin phase-shifted with Latency mode
+
+Clock      Period(ns)  Waveform(ns)    Attributes  Sources
+ref156m25  6.400       {0.000 3.200}   P           {sys_clk156_clk_p}
+c0         2.000       {0.000 1.000}   P,G,A       {lvds_vhdl_bd_i/CLOCK_156M25/U0/u_mmcm/CLKOUT0}
+c1         8.000       {0.000 4.000}   P,G,A       {lvds_vhdl_bd_i/CLOCK_156M25/U0/u_mmcm/CLKOUT1}
+c2         5.000       {0.000 2.500}   P,G,A       {lvds_vhdl_bd_i/CLOCK_156M25/U0/u_mmcm/CLKOUT2}
+fb         32.000      {0.000 16.000}  P,G,A       {lvds_vhdl_bd_i/CLOCK_156M25/U0/u_mmcm/CLKFBOUT}
+
+
+====================================================
+Generated Clocks
+====================================================
+
+Generated Clock     : c0
+Master Source       : lvds_vhdl_bd_i/CLOCK_156M25/U0/u_mmcm/CLKIN1
+Master Clock        : ref156m25
+Edges               : {1 2 3}
+Edge Shifts(ns)     : {0.000 -2.200 -4.400}
+Generated Sources   : {lvds_vhdl_bd_i/CLOCK_156M25/U0/u_mmcm/CLKOUT0}
+
+Generated Clock     : c1
+Master Source       : lvds_vhdl_bd_i/CLOCK_156M25/U0/u_mmcm/CLKIN1
+Master Clock        : ref156m25
+Edges               : {1 2 3}
+Edge Shifts(ns)     : {0.000 0.800 1.600}
+Generated Sources   : {lvds_vhdl_bd_i/CLOCK_156M25/U0/u_mmcm/CLKOUT1}
+
+Generated Clock     : c2
+Master Source       : lvds_vhdl_bd_i/CLOCK_156M25/U0/u_mmcm/CLKIN1
+Master Clock        : ref156m25
+Edges               : {1 2 3}
+Edge Shifts(ns)     : {0.000 -0.700 -1.400}
+Generated Sources   : {lvds_vhdl_bd_i/CLOCK_156M25/U0/u_mmcm/CLKOUT2}
+
+Generated Clock     : fb
+Master Source       : lvds_vhdl_bd_i/CLOCK_156M25/U0/u_mmcm/CLKIN1
+Master Clock        : ref156m25
+Edges               : {1 2 3}
+Edge Shifts(ns)     : {0.000 12.800 25.600}
+Generated Sources   : {lvds_vhdl_bd_i/CLOCK_156M25/U0/u_mmcm/CLKFBOUT}
+
+
+
+====================================================
+User Uncertainty
+====================================================
+
+
+
+====================================================
+User Jitter
+====================================================
+
+Clock      Jitter(ns)
+ref156m25  0.100
