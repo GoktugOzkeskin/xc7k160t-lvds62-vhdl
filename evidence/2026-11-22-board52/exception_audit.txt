@@ -1,0 +1,3 @@
+Same-pad lanes: 52, verified False Path: 52 (expected 52/52).
+CDC first stages: 11; second stages still timed: 11 (expected 11/11).
+Opposite cable endpoints and payload comparator paths are not exempted.

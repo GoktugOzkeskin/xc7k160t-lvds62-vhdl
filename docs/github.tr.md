@@ -1,23 +1,25 @@
-# GitHub'a aktarım
+# GitHub kullanımı
 
-Yayınlama hedefi: [GoktugOzkeskin/xc7k160t-lvds62-vhdl](https://github.com/GoktugOzkeskin/xc7k160t-lvds62-vhdl), private, ana dal `main`. Klonlamak için `git clone https://github.com/GoktugOzkeskin/xc7k160t-lvds62-vhdl.git` kullanılır. İlk commit hesabın GitHub noreply adresini kullanır; global Git kimliği değiştirilmez.
-
-Aşağıdaki adımlar ilk yerel hazırlığın kayıtları ve yeni bir hedefe aktarım örneğidir. İlk hazırlıkta kaynaklar commit için stage edildi; üretilen Vivado dosyaları `.gitignore` kapsamındadır.
-
-Bu açıklama hazırlanmış yerel klasör için geçerlidir. Kaynak ZIP'ini başka yere çıkardıysanız önce `git init --initial-branch=main` ve `git add --all` çalıştırın; ZIP, `.git` veritabanını içermez.
-
-1. GitHub hesabınızda boş bir depo oluşturun. Önerilen ad: `xc7k160t-lvds62-vhdl`. README veya lisansı GitHub tarafından ayrıca oluşturmayın; ilk yüklemeden sonra lisans eklenebilir.
-2. Yerel depo klasöründe `git status` ve `git diff --cached --stat` ile içeriği gözden geçirin.
-3. Git kimliği ayarlı değilse kendi adınız/e-postanızla ayarlayın. Ardından:
+Public depo: https://github.com/GoktugOzkeskin/xc7k160t-lvds62-vhdl
+Ana dal: main. Güncel kart varyantı: board52.
 
 ```text
-git commit -m "Add VHDL LVDS62 loopback design and validation evidence"
-git remote add origin https://github.com/OWNER/REPOSITORY.git
-git push -u origin main
+git clone https://github.com/GoktugOzkeskin/xc7k160t-lvds62-vhdl.git
+cd xc7k160t-lvds62-vhdl
 ```
 
-`OWNER/REPOSITORY` gerçek hedefle değiştirilmelidir. Kimlik doğrulama GitHub'ın normal Git akışıyla yapılır; erişim anahtarını kaynak dosyalarına yazmayın.
+Hazır bitstream, probe, proje ve routed checkpoint dosyaları [BOARD52 ön sürümünde](https://github.com/GoktugOzkeskin/xc7k160t-lvds62-vhdl/releases/tag/board52-2026-11-23) bulunur. Dosya bütünlüğünü Release SHA256SUMS.txt manifestiyle kontrol edin. Kartın beslemesi, reset polaritesi, sonlandırması ve harici zamanlaması teyit edilmeden fiziksel başarı varsayılmamalıdır.
 
-GitHub'ın barındırdığı standart runner'larda lisanslı Vivado/UNISIM ortamı bulunmadığından doğrulanmamış HDL CI sonucu veya başarı rozeti eklenmedi. HDL doğrulaması README'deki Vivado komutlarıyla çalıştırılır. Araç/lisans sağlanan bir self-hosted runner daha sonra eklenebilir.
+Kaynak değişikliklerini gözden geçirip ilgili testleri çalıştırdıktan sonra:
 
-Proje ZIP'i, checkpoint ve waveform gibi yeniden üretilebilen büyük dosyaları Git'e eklemeyin. Gerekirse ayrı bir GitHub Release eki olarak paylaşılabilir; kaynak deposu bunlara bağımlı değildir.
+```text
+git status
+git diff
+git add --all
+git commit -m "Describe the change"
+git push origin main
+```
+
+Git kimlik doğrulaması Git Credential Manager ile yapılabilir. Erişim anahtarlarını kaynaklara yazmayın. Git global kimliği bu hazırlıkta değiştirilmedi. ZIP paketleri .git veritabanını içermez; sürüm geçmişi için klonlama kullanılır.
+
+Vivado kurulu/lisanslı bir runner yapılandırılmadı; GitHub-hosted HDL CI başarısı veya rozeti yoktur. Windows/Vivado 2024.1 yerel çalıştırma komutları README'dedir. Üretilen büyük dosyalar kaynak geçmişine eklenmez, Release eki olarak yayımlanır. Açık kaynak lisansı seçilmedi; NOTICE.md durumu açıklar.

@@ -1,0 +1,16 @@
+{
+  "part": "7k160tfbg676",
+  "design": "lvds52_bd_wrapper;UserID=0XFFFFFFFF;Version=2024.1",
+  "date": "2026/11/22",
+  "time": "22:00:59",
+  "bit_file_bytes": 6692686,
+  "configuration_payload_bytes": 6692572,
+  "bit_sha256": "7b3cb9f3b5a461638bd9142f014006fb15ede5fe9168d14396b11201175b9436",
+  "ltx_sha256": "f638fc8dcd97226250d6774d279fb76946181054e8f5876e9bc13d7658da67aa",
+  "errors": 0,
+  "critical_warnings": 0,
+  "warnings": 6,
+  "hardware_programmed": false,
+  "reset_active_low": false,
+  "board_supply_reset_termination_verified": false
+}

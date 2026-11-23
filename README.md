@@ -1,86 +1,74 @@
-# XC7K160T — 62 çift çift yönlü LVDS loopback
+# XC7K160T — 52 çift çift yönlü LVDS kart testi
 
-XC7K160T-FBG676-1 üzerinde HP bank 32/33/34 için VHDL ile yazılmış otomatik loopback test tasarımı. 156,250 MHz referanstan 500/125/200 MHz saatler üretilir. Her aktif diferansiyel çift 1 Gbit/s DDR veri taşır.
+XC7K160T-FBG676-1 üzerinde fotoğraflardan çıkarılan **52 diferansiyel çift** için VHDL loopback tasarımı. 156,250 MHz referanstan 500/125/200 MHz saatler üretilir; aktif çift başına hız **1 Gbit/s DDR**'dır. Her çift sırayla TX ve RX olur.
 
-**Doğrulanan kapsam:** yedi VHDL simülasyonu, Vivado blok tasarım doğrulaması, sentez ve aday paket pinleriyle iç setup/hold zamanlaması. **Kart üzerinde doğrulanmadı:** gerçek kart XDC'si ve elektriksel sonlandırma bilgisi sağlanmadı. Bitstream üretilmez.
+**Doğrulanan:** Vivado BD, sentez, gerçek paket pinleriyle tam yönlendirme/iç zamanlama ve UNISIM seri simülasyonu. **Kart üzerinde doğrulanmadı:** gerçek besleme, reset polaritesi, sonlandırma ve harici gecikmeler teyit bekliyor. Bitstream üretimi tamamlandı; donanıma programlama yapılmadı.
 
-## Özellikler
+## Hazır dosyalar
 
-- Gerçek 62 diferansiyel `inout` çift: bank32/33/34 için 20/20/22.
-- 31 harici loopback bağlantısı; her test turunda TX/RX rolleri değiştirilir.
-- Kanal başına otomatik IDELAY göz taraması ve DDR BITSLIP hizalama.
-- PRBS31 üretimi, gönderilen/alınan veri karşılaştırması, kanal hata maskeleri ve yön başına sayaçlar.
-- İki yön tamamlandığında PASS; hata, hizalama/kalibrasyon kaybı ve watchdog için kalıcı FAIL.
-- Üç ILA, dört VIO ve gerçek Vivado IP Integrator blok tasarımı.
+[BOARD52 sürümü](https://github.com/GoktugOzkeskin/xc7k160t-lvds62-vhdl/releases/tag/board52-2026-11-23) `.bit`, eşleşen `.ltx`, Vivado proje ZIP'i, kaynak ZIP'i, routed DCP, rapor paketi ve SHA256 manifestini içerir. Kart doğrulaması beklediğinden **ön sürümdür**. Kaynak kod için ana dal `main` kullanılır; depo public olarak kullanılmaktadır.
 
-SelectIO Wizard'ın bu cihazdaki BIDIR+DIFF+LVDS birleşimi desteklenmediğinden PHY, VHDL içinde IOBUFDS/OSERDESE2/ISERDESE2/IDELAYE2 primitive'leriyle kurulur. Aynı tel üzerinde eşzamanlı full duplex iletişim yapılmaz.
+## Kart bağlantıları
 
-## Gereksinimler
+| Bağlantı | Bank / pin |
+|---|---|
+| LVDS_CONN2_0…23 | Bank34, 24 çift |
+| LVDS_CONN2_24…34 | Bank33, 11 çift |
+| LVDS_CONN2_35…51 | Bank32, 17 çift |
+| SYSCLK_156M25_P/N | AA10 / AB10, bank33 SRCC |
+| FPGA_RESET | U4, bank34 IO_0_VRN |
 
-- Vivado **2024.1**, Kintex-7 cihaz desteği ve sentez/implementation için uygun lisans.
-- Windows PowerShell veya PowerShell 7. Windows üzerinde doğrulanmıştır.
-- `VIVADO_BIN`: Vivado kurulumunun `bin` dizini; alternatif olarak her komuta `-VivadoBin` verilebilir. Vivado araçları PATH'te ise otomatik bulunur.
+Etkin kısıtlar: [board_pins.xdc](board52/board_pins.xdc), [pin tablosu](board52/pin_map.csv), [loopback kablolaması](board52/loopback_map.csv). Varsayılan test kablosu `i ↔ i+26`, i=0…25; P→P, N→N. Bu eşleme takılı kablonun teyidi değildir.
 
-## Çalıştırma
+## Davranış
 
-Depo kökünde, Vivado 2024.1 ortamı etkin bir PowerShell oturumunda:
+- Bank başına PHY/IDELAYCTRL ve 26 bağlantılı ortak test denetleyicisi.
+- Otomatik IDELAY göz taraması, DDR BITSLIP, PRBS31 karşılaştırma ve yön başına hata/bit sayaçları.
+- İki yön tamamlandıktan sonra PASS; enjeksiyon, hizalama/kalibrasyon kaybı ve watchdog için FAIL.
+- 125 MHz ve ham referans saat alanında ayrı reset bırakma senkronizasyonu.
+- Bir DATA_ILA, TEST_VIO ve RESULT_VIO. Kontroller ve status bitleri [board52/README.md](board52/README.md) içindedir.
+
+PHY, VHDL içinde IOBUFDS/OSERDESE2/ISERDESE2/IDELAYE2 primitive'leri kullanır. SelectIO Wizard'ın BIDIR+DIFF+LVDS birleşimi bu cihazda kabul edilmediği için desteklenmeyen bir Wizard ayarı kullanılmaz.
+
+## Yeniden üretim — Vivado 2024.1 / Windows PowerShell
+
+Vivado 2024.1, Kintex-7 desteği ve uygun sentez/implementation lisansı gerekir. Araçlar PATH'te olabilir veya `VIVADO_BIN` / `-VivadoBin` ile bin dizini verilebilir.
 
 ```powershell
-# Alternatif: $env:VIVADO_BIN = '<Vivado-2024.1-bin-dizini>'
-./scripts/run_vivado.ps1 -Step create
-./scripts/run_simulations.ps1
-./scripts/run_vivado.ps1 -Step synth
-./scripts/run_vivado.ps1 -Step route
-./scripts/run_vivado.ps1 -Step audit
-./scripts/run_vivado.ps1 -Step open
+./board52/run_low_impact.ps1 -Step create
+./board52/run_low_impact.ps1 -Step implement
+./board52/run_low_impact.ps1 -Step sim
+./board52/run_low_impact.ps1 -Step audit
+./board52/run_low_impact.ps1 -Step bitstream
+./board52/run_low_impact.ps1 -Step archive
 ```
 
-Proje `build/project/lvds62_vhdl.xpr`, yeni raporlar `build/reports/`, simülasyon çıktıları `build/sim/` altında oluşur. `create`, mevcut üretilmiş projeyi yeniden oluşturur. `route`, yalnızca **aday** pin dosyasını yükler; normal proje kısıtları gerçek kart pinlerini içermez. `audit`, routed checkpoint gerektirir. İsteğe bağlı `-Step archive`, Vivado proje ZIP'ini `build/` altında üretir.
+GUI açılmaz. Çıktılar `build/board52/`, raporlar `reports/`, bitstream/probe dosyaları `bitstream/` altında üretilir. Varsayılan launcher düşük CPU önceliği, en çok iki thread ve uygun sistemde CPU affinity kısıtı uygular. Windows debug-hub geçici yol sınırı için kısa TEMP çalışma dizini kullanılır. Checkpoint'ten devam etmek için `-Step resume` vardır.
 
-Tcl scriptleri doğrudan da çalıştırılabilir:
+## BOARD52 sonuçları — 22 Kasım 2026 çalıştırması
 
-```text
-vivado -mode batch -source scripts/create_project.tcl
-vivado -mode batch -source scripts/verify_implementation.tcl
-vivado -mode batch -source scripts/route_candidate.tcl
-vivado -mode batch -source scripts/audit_routed.tcl
-vivado -mode gui -source scripts/open_design.tcl
-```
-
-## Loopback bağlantısı
-
-Her bankta ilk yarıdaki çift ikinci yarıdaki eşiyle P→P, N→N bağlanır. Bank32/33: `i ↔ i+10`, i=0..9. Bank34: `i ↔ i+11`, i=0..10. Ayrıntı: [mantıksal bağlantı tablosu](hardware/LOOPBACK_BAGLANTILARI.csv). [Paket envanteri](hardware/PIN_ENVANTERI.csv), kart şemasının yerini tutmaz.
-
-## Kaydedilen doğrulama
-
-| Kontrol | 17 Kasım 2026 sonucu |
+| Kontrol | Sonuç |
 |---|---|
-| VHDL testleri | 7/7 PASS |
-| Gerçek UNISIM seri sistem testi | 62 çift, iki yönde 2.010.272 kontrol edilen bit, 0 hata |
-| Sentez / GUI Validate Design | PASS |
-| Aday routed setup / hold payı | +1,834 ns / +0,042 ns |
+| Fiziksel pin denetimi | 107 port: 104 veri + 2 saat + 1 reset |
+| Sentez | 0 hata / 0 kritik uyarı |
+| Tam route | 30.032/30.032 net; routing hatası 0 |
+| Setup WNS / hold WHS | +0,575 ns / +0,038 ns |
 | TNS / THS | 0 / 0 |
-| İstisna denetimi | 62 aynı-pad yol; 13 ikinci senkronizatör kademesi zamanlamalı |
+| Bus-skew | 4/4 MET |
+| Seri UNISIM loopback | İki yönde 1.686.048 bit, 0 hata |
+| Negatif test | Enjekte edilen hata global FAIL üretti |
+| Bitstream | Üretildi; 0 hata / 0 kritik uyarı, 6 uyarı |
 
-Tarihsel log ve raporlar [evidence/2026-11-17](evidence/2026-11-17/) altındadır. Bunlar önceki yerel çalıştırmanın sonuçlarıdır; her yeni klonun otomatik olarak doğrulandığı anlamına gelmez. Yerel kullanıcı/host yolları `<LOCAL_PATH>`, `<PROJECT>` ve `<HOST>` işaretleriyle temizlenmiştir. RTL/testbench içerikleri değiştirilmemiştir.
+[Kanıtlar ve rapor](evidence/2026-11-22-board52/) yerel yolları temizlenmiş kayıtlardır. Sayısal sonuçlar korunmuştur. Bunlar kart BER ölçümü veya her yeni klonun test edildiği anlamına gelmez. GitHub-hosted Vivado CI başarısı iddia edilmez.
 
-GitHub hazırlığı sırasında bu depo konumundan proje yeniden oluşturuldu ve `scripts/run_simulations.ps1` ile **yedi test tekrar PASS** verdi. Simülasyon kanıtları bu yeni çalıştırmayla güncellendi; routed zamanlama kanıtı önceki doğrulanmış VHDL çalışmasına aittir. Scriptlerin taşınabilirliği için yapılan değişiklikler HDL mantığını değiştirmez.
+## Açık varsayımlar
 
-Vivado DRC'deki LVDS-1, çift yönlü LVDS'nin sabit empedans/sonlandırma ve turnaround koşullarıyla ilgilidir. CFGBVS-1 kart konfigürasyon geriliminin bilinmemesinden kaynaklanır. Harici giriş/çıkış gecikmeleri de bilinmiyor. Bu yüzden iç zamanlama sonucu kart üzerindeki 1 Gbit/s BER başarısı olarak yorumlanamaz. Ayrıntılar: [tasarım ve VIO kullanımı](docs/design.tr.md), [doğrulama raporu](docs/validation.tr.md).
+DS182 Tablo 13, HP LVDS için nominal 1,8 V gerektirir; bu bilgi kartın gerçek rail bağlantısını doğrulamaz. Reset varsayılanı `RESET_ACTIVE_LOW=false` (aktif-yüksek). Konfigürasyon bankının CFGBVS/CONFIG_VOLTAGE bilgisi, sonlandırma ve gerçek harici gecikmeler bilinmiyor; 100 ps input jitter analiz varsayımıdır.
 
-## Depo düzeni
+DRC'deki CFGBVS-1 ve LVDS-1 ile vendor debug uyarıları bastırılmadı. CDC'deki 52 kullanılmayan aynı-pad geri okuma yolu dar kapsamlı False Path'tir; 11 ikinci senkronizatör kademesi zamanlamalı kalır. Ayrıntılar [kart dokümanında](board52/README.md) ve [doğrulama raporunda](evidence/2026-11-22-board52/validation.tr.md).
 
-```text
-rtl/          Kullanıcı VHDL RTL kaynakları
-sim/          VHDL testbench'leri
-constraints/  Saat/istisnalar ve yalnızca aday pin eşlemesi
-scripts/      Proje, simülasyon, sentez, route ve audit komutları
-hardware/     Mantıksal loopback eşlemesi ve paket pin envanteri
-docs/         Tasarım, doğrulama ve GitHub aktarım bilgileri
-evidence/     Yerel yolları temizlenmiş tarihsel doğrulama kayıtları
-build/        Yeniden üretilen dosyalar; Git dışında
-```
+## Önceki 62 çift örneği
 
-GitHub deposu: [GoktugOzkeskin/xc7k160t-lvds62-vhdl](https://github.com/GoktugOzkeskin/xc7k160t-lvds62-vhdl), private. Klonlama ve aktarım bilgileri [GitHub rehberinde](docs/github.tr.md); lisans durumu [NOTICE.md](NOTICE.md) içindedir.
+17 Kasım 2026'daki 62 çift genel örneği `rtl/`, `sim/`, `scripts/`, `constraints/` ve [tarihsel dokümanlarında](docs/design.tr.md) korunur. Bu eski örnek 20/20/22 varsayımı ve aday pinlerle çalışır; gerçek 52 çift kart için **board52 akışı** kullanılmalıdır. Eski yedi test `scripts/run_simulations.ps1` ile çalıştırılır; bu sonuçlar yeni kartın yerine geçmez.
 
-Depo içeriği denetimi (Python 3 ve Git): `python scripts/check_repository.py`. Bu komut paketleme, yerel yol ve üretilen dosya kontrollerini yapar; HDL simülasyonunun yerine geçmez.
+Kaynaklar ve raporlar Git'te; üretilen proje/IP/checkpoint/bitstream/waveform dosyaları `build/` altında ve Git dışındadır. Büyük hazır dosyalar Release ekidir. Depo kontrolü: `python scripts/check_repository.py`. [Lisans durumu](NOTICE.md), [GitHub kullanımı](docs/github.tr.md).

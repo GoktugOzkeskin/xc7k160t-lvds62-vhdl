@@ -1,0 +1,42 @@
+#-----------------------------------------------------------
+# xsim v2024.1 (64-bit)
+# SW Build 5076996 on Wed May 22 18:37:14 MDT 2024
+# IP Build 5075265 on Wed May 22 21:45:21 MDT 2024
+# SharedData Build 5076995 on Wed May 22 18:29:18 MDT 2024
+# Start of session at: Sun Nov 22 20:56:21 2026
+# Process ID: 12012
+# Current directory: <PROJECT>/board52/sim
+# Command line: xsim.exe -log board52_sim.log -mode tcl -source {xsim.dir/board52/xsim_script.tcl}
+# Log file: <PROJECT>/board52/sim/board52_sim.log
+# Journal file: <PROJECT>/board52/sim\xsim.jou
+# Running On        :<HOST>
+# Platform          :Windows Server 2016 or Windows 10
+# Operating System  :26200
+# Processor Detail  :13th Gen Intel(R) Core(TM) i7-13700F
+# CPU Frequency     :2112 MHz
+# CPU Physical cores:8
+# CPU Logical cores :16
+# Host memory       :34164 MB
+# Swap memory       :2147 MB
+# Total Virtual     :36311 MB
+# Available Virtual :5313 MB
+#-----------------------------------------------------------
+source xsim.dir/board52/xsim_script.tcl
+# xsim {board52} -autoloadwcfg -runall
+Time resolution is 1 ps
+run -all
+Note: BOARD52 progress 25000000 ps
+Time: 25 us  Iteration: 0  Process: /tb_board52/line__45  File: <PROJECT>/board52/tb_board52.vhd
+Note: BOARD52 progress 50000000 ps
+Time: 50 us  Iteration: 0  Process: /tb_board52/line__45  File: <PROJECT>/board52/tb_board52.vhd
+Note: BOARD52 progress 75000000 ps
+Time: 75 us  Iteration: 0  Process: /tb_board52/line__45  File: <PROJECT>/board52/tb_board52.vhd
+Note: PASS: BOARD52 clean loopback, actual three-bank 17/11/24 PHY and MMCM, 52 bidirectional pairs, checked=843024/843024
+Time: 86825600 ps  Iteration: 9  Process: /tb_board52/line__31  File: <PROJECT>/board52/tb_board52.vhd
+Note: PASS: BOARD52 runtime direction reversal and global error-injection FAIL evaluation
+Time: 95194400 ps  Iteration: 0  Process: /tb_board52/line__31  File: <PROJECT>/board52/tb_board52.vhd
+$stop called at time : 95194400 ps
+run: Time (s): cpu = 00:00:00 ; elapsed = 00:05:45 . Memory (MB): peak = 224.305 ; gain = 0.000
+exit
+INFO: xsimkernel Simulation Memory Usage: 75544 KB (Peak: 75544 KB), Simulation CPU Usage: 338499 ms
+INFO: [Common 17-206] Exiting xsim at Sun Nov 22 21:02:08 2026...
